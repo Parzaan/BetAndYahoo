@@ -10,7 +10,7 @@ import {
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 
-export function SidebarDemo() {
+export function SidebarDemo({ children }) {
   const links = [
     {
       label: "Dashboard",
@@ -76,7 +76,9 @@ export function SidebarDemo() {
           </div>
         </SidebarBody>
       </Sidebar>
-      <Dashboard />
+      <div className="flex flex-1 overflow-y-auto bg-white dark:bg-neutral-900 rounded-tl-2xl border-l border-neutral-200 dark:border-neutral-700">
+        {children}
+      </div>
     </div>
   );
 }
@@ -108,7 +110,7 @@ export const LogoIcon = () => {
 };
 
 // Dummy dashboard component with content
-const Dashboard = () => {
+/*const Dashboard = () => {
   return (
     <div className="flex flex-1">
       <div
@@ -131,3 +133,4 @@ const Dashboard = () => {
     </div>
   );
 };
+*/
