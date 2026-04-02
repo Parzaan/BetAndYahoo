@@ -1,0 +1,25 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/geist";
+
+@theme {
+  /* Your HEHE Palette */
+  --color-market-bg: #071108;       /* The main background */
+  --color-market-sidebar: #364652;  /* The sidebar background */
+  --color-market-accent: #BFB1C1;   /* Primary buttons/highlights */
+  --color-market-border: #B5BEC6;   /* Borders and dividers */
+  --color-market-text: #C7DBE6;     /* Main text color */
+
+  /* Map them to shadcn variables for a 1-click theme update */
+  --color-background: var(--color-market-bg);
+  --color-foreground: var(--color-market-text);
+  --color-primary: var(--color-market-accent);
+  --color-border: var(--color-market-border);
+}
+
+@layer base {
+  body {
+    @apply bg-market-bg text-market-text antialiased;
+  }
+}
