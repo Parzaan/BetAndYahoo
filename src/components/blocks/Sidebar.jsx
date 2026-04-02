@@ -6,13 +6,16 @@ import {
   IconBrandTabler,
   IconSettings,
   IconUserBolt,
+  IconTrophy,
 } from "@tabler/icons-react";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
+import { Icon } from "lucide-react";
 
-export function SidebarDemo({ children }) {
+export function SidebarDemo({ children, activePage, setActivePage }) {
   const links = [
     {
+      id: "dashboard",
       label: "Dashboard",
       href: "#",
       icon: (
@@ -20,6 +23,7 @@ export function SidebarDemo({ children }) {
       ),
     },
     {
+      id: "profile",
       label: "Profile",
       href: "#",
       icon: (
@@ -27,6 +31,7 @@ export function SidebarDemo({ children }) {
       ),
     },
     {
+      id: "settings",
       label: "Settings",
       href: "#",
       icon: (
@@ -34,6 +39,15 @@ export function SidebarDemo({ children }) {
       ),
     },
     {
+      id: "leaderboard",
+      label: "Leaderboard",
+      href: "#",
+      icon: (
+        <IconTrophy className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
+      ),
+    },
+    {
+      id: "logout",
       label: "Logout",
       href: "#",
       icon: (
@@ -46,7 +60,7 @@ export function SidebarDemo({ children }) {
     <div
       className={cn(
         "mx-auto flex w-full max-w-7xl flex-1 flex-col overflow-hidden rounded-md border border-neutral-200 bg-gray-100 md:flex-row dark:border-neutral-700 dark:bg-neutral-800",
-        // for your use case, use `h-screen` instead of `h-[60vh]`
+
         "h-screen"
       )}>
       <Sidebar open={open} setOpen={setOpen}>
@@ -55,7 +69,12 @@ export function SidebarDemo({ children }) {
             {open ? <Logo /> : <LogoIcon />}
             <div className="mt-8 flex flex-col gap-2">
               {links.map((link, idx) => (
-                <SidebarLink key={idx} link={link} />
+                <SidebarLink 
+                  key={idx} 
+                  link={link} 
+                  onClick={() => setActivePage(link.id)}
+                  className={activePage === link.id ? "bg-neutral-200 dark:bg-neutral-700 rounded-lg px-1" : "px-2"}
+                />
               ))}
             </div>
           </div>
