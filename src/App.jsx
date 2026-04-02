@@ -5,6 +5,7 @@ import { SidebarDemo } from './components/blocks/Sidebar';
 import LandingPage from './pages/LandingPage';
 import { MemeCard } from './components/ui/MemeCard';
 import LeaderboardPage from './pages/Leaderboard';
+import Profile from './pages/Profile';
 
 export default function App(){
   const [activePage, setActivePage] = useState('dashboard');
@@ -15,6 +16,8 @@ export default function App(){
         return <LandingPage />;
       case 'leaderboard':
         return <LeaderboardPage />;
+      case 'profile':
+        return <Profile />;
       default:
         return <LandingPage />;
     }

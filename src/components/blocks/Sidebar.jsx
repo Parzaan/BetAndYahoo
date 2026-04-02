@@ -4,15 +4,75 @@ import { Sidebar, SidebarBody, SidebarLink } from "../ui/sidebar";
 import {
   IconArrowLeft,
   IconBrandTabler,
-  IconSettings,
   IconUserBolt,
   IconTrophy,
 } from "@tabler/icons-react";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import { Icon } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
+
+const BalanceCard = ({ open, balance }) => {
+  return (
+    <motion.div 
+      layout
+      className={cn(
+        "mb-4 relative overflow-hidden mx-2 rounded-2xl border backdrop-blur-xl transition-colors duration-500",
+        open ? "bg-white/5 border-white/10" : "mx-0 bg-transparent border-transparent"
+      )}
+      animate={{
+        padding: open ? "16px" : "16px 0px",
+      }}
+      transition={{
+        type: "spring",
+        stiffness: 300,
+        damping: 30
+      }}
+    >
+      {open ? (
+        <motion.div 
+          key="open"
+          initial={{ opacity: 0, x: -10 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -10 }}
+          transition={{ duration: 0.2 }}
+          className="flex flex-col gap-1"
+        >
+          <div className="flex items-center justify-between">
+            <span className="text-[10px] font-black uppercase tracking-widest text-[#39FF14]/60 whitespace-nowrap">Wallet Balance</span>
+            <div className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#39FF14] opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#39FF14]"></span>
+            </div>
+          </div>
+          <div className="flex items-baseline gap-1">
+            <span className="text-[#39FF14] text-xs font-black italic tracking-tighter opacity-80">$</span>
+            <span className="text-2xl font-black italic tracking-tighter text-white">
+              {balance?.toLocaleString()}
+            </span>
+          </div>
+          <div className="text-[10px] font-bold text-white/40 tracking-tight">MemeBucks (MB)</div>
+        </motion.div>
+      ) : (
+        <motion.div 
+          key="collapsed"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="flex flex-col items-center justify-center"
+        >
+          <div className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#39FF14] opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#39FF14]"></span>
+          </div>
+        </motion.div>
+      )}
+    </motion.div>
+  );
+};
 
 export function SidebarDemo({ children, activePage, setActivePage }) {
+  const { user } = useAuth();
   const links = [
     {
       id: "dashboard",
@@ -28,14 +88,6 @@ export function SidebarDemo({ children, activePage, setActivePage }) {
       href: "#",
       icon: (
         <IconUserBolt className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
-      ),
-    },
-    {
-      id: "settings",
-      label: "Settings",
-      href: "#",
-      icon: (
-        <IconSettings className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
       ),
     },
     {
@@ -78,14 +130,15 @@ export function SidebarDemo({ children, activePage, setActivePage }) {
               ))}
             </div>
           </div>
-          <div>
+          <div className="flex flex-col">
+            <BalanceCard open={open} balance={user?.balance} />
             <SidebarLink
               link={{
-                label: "Manu Arora",
+                label: user?.username || "Guest",
                 href: "#",
                 icon: (
                   <img
-                    src="https://assets.aceternity.com/manu.png"
+                    src={user?.avatar || "https://assets.aceternity.com/manu.png"}
                     className="h-7 w-7 shrink-0 rounded-full"
                     width={50}
                     height={50}
@@ -112,7 +165,7 @@ export const Logo = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         className="font-medium whitespace-pre text-black dark:text-white">
-        Acet Labs
+        BetnYahoo
       </motion.span>
     </a>
   );
@@ -127,29 +180,3 @@ export const LogoIcon = () => {
     </a>
   );
 };
-
-// Dummy dashboard component with content
-/*const Dashboard = () => {
-  return (
-    <div className="flex flex-1">
-      <div
-        className="flex h-full w-full flex-1 flex-col gap-2 rounded-tl-2xl border border-neutral-200 bg-white p-2 md:p-10 dark:border-neutral-700 dark:bg-neutral-900">
-        <div className="flex gap-2">
-          {[...new Array(4)].map((i, idx) => (
-            <div
-              key={"first-array-demo-1" + idx}
-              className="h-20 w-full animate-pulse rounded-lg bg-gray-100 dark:bg-neutral-800"></div>
-          ))}
-        </div>
-        <div className="flex flex-1 gap-2">
-          {[...new Array(2)].map((i, idx) => (
-            <div
-              key={"second-array-demo-1" + idx}
-              className="h-full w-full animate-pulse rounded-lg bg-gray-100 dark:bg-neutral-800"></div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-};
-*/
